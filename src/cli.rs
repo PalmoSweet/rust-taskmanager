@@ -25,20 +25,20 @@ pub enum Commands {
         #[arg(short, long, help = "The priority of the task (lower numbers are higher priority).")]
         priority: Option<u32>,
     },
-/*    #[command(alias = "ls", about = "List all of your tasks.")]
+    #[command(alias = "ls", about = "List all of your tasks.")]
     List {
         #[arg(short, long, help = "List today's tasks")]
-        today: Option<bool>,
+        today: bool,
 
-        #[arg(short = "tm", long, help = "List tomorrow's tasks")]
-        tomorrow: Option<bool>,
+        #[arg(short = 'm', long, help = "List tomorrow's tasks")]
+        tomorrow: bool,
 
-        #[arg(short, help = "List undone tasks")]
-        undone: Option<bool>,
+        #[arg(short, long, help = "List undone tasks")]
+        undone: bool,
 
         #[arg(short, long, help = "List done tasks")]
-        done: Option<bool>,
-    },*/
+        done: bool,
+    },
 /*    Remove {},
     Modify {},
     Done {},
@@ -46,11 +46,11 @@ pub enum Commands {
 }
 
 pub fn run() {
-    let cli = Cli::parse();
+    let cli: Cli = Cli::parse();
 
     match cli.command {
         Commands::Add { description, due, priority } => commands::add::run(description, due, priority),
-        //Commands::List => println!("list command"), //commands::list::run(),
+        Commands::List {today, tomorrow, undone, done} => commands::list::run(today, tomorrow, undone, done),
         //Commands::Remove { id } =>  println!("remove command") //commands::remove::run(id),
     }
 }
