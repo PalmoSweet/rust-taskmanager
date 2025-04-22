@@ -68,7 +68,7 @@ Example:
 cargo run -- list --today
 ```
 
-### 🧪 Running globally in terminal (MAC)
+### 🧪 Running globally in terminal (MAC and Linux)
 
 To install globally:
 
