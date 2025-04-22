@@ -46,7 +46,8 @@ pub enum Commands {
 
         #[arg(short, long, help = "Remove all tasks that are marked as done.")]
         done: bool,
-    }
+    },
+
 /*
     Done {},
     Undone {},*/
