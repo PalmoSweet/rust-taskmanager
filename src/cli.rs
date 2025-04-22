@@ -41,20 +41,20 @@ pub enum Commands {
     },
     #[command(alias = "rm", about = "Remove a task from the list.")]
     Remove {
-        #[arg(help = "The ID of the task to remove.")]
+        #[arg(help = "The IDs of the task to remove. Apply multiple (1 2 3...) to remove multiple tasks.")]
         ids: Vec<u32>,
 
         #[arg(short, long, help = "Remove all tasks that are marked as done.")]
         done: bool,
     },
-    #[command(alias = "d", about = "Mark a task as done.")]
+    #[command(alias = "d", about = "Mark tasks as done.")]
     Done {
-        #[arg(help = "The ID of the task to mark as done.")]
+        #[arg(help = "The IDs of the task to mark as done. Apply multiple (1 2 3...) to mark multiple tasks.")]
         ids: Vec<u32>,
     },
-    #[command(alias = "ud", about = "Mark a task as usdone.")]
+    #[command(alias = "ud", about = "Mark tasks as undone.")]
     Undone {
-        #[arg(help = "The ID of the task to mark as undone.")]
+        #[arg(help = "The IDs of the task to mark as undone. Apply multiple (1 2 3...) to mark multiple tasks.")]
         ids: Vec<u32>,
     }
 }
@@ -67,6 +67,6 @@ pub fn run() {
         Commands::List {today, tomorrow, undone, done} => commands::list::run(today, tomorrow, undone, done),
         Commands::Remove {ids, done} => commands::remove::run(ids, done),
         Commands::Done {ids} => commands::done::run(ids),
-        Commands::Undone {ids} => commands::done::run(ids),
+        Commands::Undone {ids} => commands::undone::run(ids),
     }
 }
