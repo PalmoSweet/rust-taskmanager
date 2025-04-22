@@ -125,9 +125,9 @@ Run `cargo run -- help` or `task help` (depending on your installation method) t
 
 ## 📬 License
 
-
+MIT License — free to use, modify, and distribute.
 
 ## ✨ Contributions
 
-
+Contributions, bug reports, and feature requests are welcome!
 
