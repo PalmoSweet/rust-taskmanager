@@ -39,8 +39,15 @@ pub enum Commands {
         #[arg(short, long, help = "List done tasks")]
         done: bool,
     },
-/*    Remove {},
-    Modify {},
+    #[command(alias = "rm", about = "Remove a task from the list.")]
+    Remove {
+        #[arg(help = "The ID of the task to remove.")]
+        ids: Vec<u32>,
+
+        #[arg(short, long, help = "Remove all tasks that are marked as done.")]
+        done: bool,
+    }
+/*
     Done {},
     Undone {},*/
 }
@@ -51,6 +58,6 @@ pub fn run() {
     match cli.command {
         Commands::Add { description, due, priority } => commands::add::run(description, due, priority),
         Commands::List {today, tomorrow, undone, done} => commands::list::run(today, tomorrow, undone, done),
-        //Commands::Remove { id } =>  println!("remove command") //commands::remove::run(id),
+        Commands::Remove {ids, done} => commands::remove::run(ids, done),
     }
 }

@@ -1,5 +1,4 @@
 use std::env;
-use std::fmt::format;
 use serde::{Serialize, Deserialize};
 use colored::*;
 

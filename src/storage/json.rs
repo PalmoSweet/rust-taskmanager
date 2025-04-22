@@ -1,5 +1,6 @@
 use crate::models::task::Task;
 use std::{fs, path::PathBuf};
+use std::fmt::format;
 
 pub fn get_path() -> PathBuf {
     // Creates a mutable path to the home directory
@@ -30,6 +31,18 @@ pub fn load() -> Result<Vec<Task>, String> {
         Ok(tasks) => Ok(tasks),
         Err(err) => Err(format!("Could not parse JSON file {}: {}", path.display(), err)),
     }
+}
+
+pub fn load_done_tasks() -> Result<Vec<Task>, String> {
+    // Load all tasks from the JSON file
+    let tasks: Vec<Task> = load()
+        .map_err(|err| format!("Could not load tasks: {}", err))?;
+
+    // Filter the tasks to only include those that are done
+    let done_tasks: Vec<Task> = tasks.into_iter().filter(|task| task.done).collect();
+
+    // Return the filtered tasks
+    Ok(done_tasks)
 }
 
 pub fn save(tasks: &[Task]) -> Result<String, String> {
@@ -64,6 +77,29 @@ pub fn add_task(mut new_task: Task) -> Result<Task, String> {
         .map_err(|err: String| format!("Could not save tasks: {}", err))?;
 
     Ok(new_task)
+}
+
+
+pub fn remove_task(id: u32) -> Result<String, String> {
+    let mut tasks: Vec<Task> = load()
+        .map_err(|err: String| format!("Could not load tasks: {}", err))?;
+
+    // Save the original length of the tasks vector
+    let original_len: usize = tasks.len();
+
+    // Remove the task with the given ID
+    tasks.retain(|t: &Task| t.id != id);
+
+    // Check if anything was removed
+    if tasks.len() == original_len {
+        return Err(format!("Task with ID {} not found.", id));
+    }
+
+    // Save the updated task list
+    save(&tasks).map_err(|err| format!("Could not save tasks: {}", err))?;
+
+    // Return success message
+    Ok(format!("Task with ID {} was removed.", id))
 }
 
 // Removes a task by its ID
