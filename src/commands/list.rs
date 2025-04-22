@@ -47,6 +47,7 @@ pub fn run(today: bool, tomorrow: bool, undone: bool, done: bool) {
     if today || tomorrow || undone || done {
         let filtered_tasks: Vec<Task> = tasks.into_iter()
             .filter(|task: &Task| {
+                #[allow(unused_assignments)] // Warning about keep never read but its necessary for the filter
                 let mut keep: bool = false;
 
                 keep = (done && task.done) || (undone && !task.done);

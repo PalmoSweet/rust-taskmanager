@@ -47,10 +47,16 @@ pub enum Commands {
         #[arg(short, long, help = "Remove all tasks that are marked as done.")]
         done: bool,
     },
-
-/*
-    Done {},
-    Undone {},*/
+    #[command(alias = "d", about = "Mark a task as done.")]
+    Done {
+        #[arg(help = "The ID of the task to mark as done.")]
+        ids: Vec<u32>,
+    },
+    #[command(alias = "ud", about = "Mark a task as usdone.")]
+    Undone {
+        #[arg(help = "The ID of the task to mark as undone.")]
+        ids: Vec<u32>,
+    }
 }
 
 pub fn run() {
@@ -60,5 +66,7 @@ pub fn run() {
         Commands::Add { description, due, priority } => commands::add::run(description, due, priority),
         Commands::List {today, tomorrow, undone, done} => commands::list::run(today, tomorrow, undone, done),
         Commands::Remove {ids, done} => commands::remove::run(ids, done),
+        Commands::Done {ids} => commands::done::run(ids),
+        Commands::Undone {ids} => commands::done::run(ids),
     }
 }

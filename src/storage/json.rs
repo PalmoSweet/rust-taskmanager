@@ -1,6 +1,5 @@
 use crate::models::task::Task;
 use std::{fs, path::PathBuf};
-use std::fmt::format;
 
 pub fn get_path() -> PathBuf {
     // Creates a mutable path to the home directory
@@ -102,18 +101,38 @@ pub fn remove_task(id: u32) -> Result<String, String> {
     Ok(format!("Task with ID {} was removed.", id))
 }
 
-// Removes a task by its ID
-/*
-pub fn remove_task(id: u32) {
-    let mut tasks = load();
-    let original_len = tasks.len();
+pub fn done_task(id: u32) -> Result<String, String> {
+    let mut tasks = load()
+        .map_err(|err| format!("Failed to load tasks. {}", err))?;
 
-    tasks.retain(|t| t.id != id);
+    if let Some(task) = tasks.iter_mut().find(|task| task.id == id) {
+        // Mark the task as done
+        task.done = true;
 
-    if tasks.len() == original_len {
-        eprintln!("No task with ID {} found.", id);
+        // Save the updated tasks back to the JSON file
+        save(&tasks)
+            .map_err(|_| "Failed to save tasks.".to_string())?;
+
+        Ok(format!("Task with ID {} was marked as done.", id))
     } else {
-        save(&tasks);
-        println!("Removed task with ID {}", id);
+        Err(format!("Task with ID {} not found.", id))
     }
-}*/
+}
+
+pub fn undone_task(id: u32) -> Result<String, String> {
+    let mut tasks = load()
+        .map_err(|err| format!("Failed to load tasks. {}", err))?;
+
+    if let Some(task) = tasks.iter_mut().find(|task| task.id == id) {
+        // Mark the task as done
+        task.done = false;
+
+        // Save the updated tasks back to the JSON file
+        save(&tasks)
+            .map_err(|_| "Failed to save tasks.".to_string())?;
+
+        Ok(format!("Task with ID {} was marked as undone.", id))
+    } else {
+        Err(format!("Task with ID {} not found.", id))
+    }
+}

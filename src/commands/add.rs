@@ -26,9 +26,9 @@ pub fn run(description: String, due: Option<u32>, priority: Option<u32>) {
         priority: Some(priority),
         done: false,
     }) {
-        Ok(task) => { task.print() },
+        Ok(task) => { println!("Task with id {} created successfully!", task.id) },
         Err(err) => {
-            eprintln!("{}", err); // todo: write a better error message in production
+            eprintln!("{}", err);
             process::exit(1);
         }
     }
