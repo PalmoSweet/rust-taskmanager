@@ -126,6 +126,7 @@ Run `cargo run -- help` or `task help` (depending on your installation method) t
 ## 📬 License
 
 MIT License — free to use, modify, and distribute.
+- The Dependency `colored` is licensed under the Mozilla Public License 2.0. See [crates.io](https://crates.io/crates/colored) for more information.
 
 ## ✨ Contributions
 
